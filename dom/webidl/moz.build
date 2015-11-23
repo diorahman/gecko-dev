@@ -171,6 +171,7 @@ WEBIDL_FILES = [
     'HDMIInputPort.webidl',
     'Headers.webidl',
     'HeapSnapshot.webidl',
+    'Hello.webidl',
     'History.webidl',
     'HTMLAllCollection.webidl',
     'HTMLAnchorElement.webidl',
