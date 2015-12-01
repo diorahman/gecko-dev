@@ -284,7 +284,7 @@ var PluginProvider = {
 
 function isFlashPlugin(aPlugin) {
   for (let type of aPlugin.pluginMimeTypes) {
-    if (type.type == FLASH_MIME_TYPE) {
+    if (type.type == SPSE_MIME_TYPE) {
       return true;
     }
   }
