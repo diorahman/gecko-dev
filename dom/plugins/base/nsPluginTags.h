@@ -62,6 +62,7 @@ public:
               nsTArray<nsCString> aExtensions,
               bool aIsJavaPlugin,
               bool aIsFlashPlugin,
+              bool aIsSPSEPlugin,
               int64_t aLastModifiedTime,
               bool aFromExtension);
 
@@ -100,6 +101,7 @@ public:
   nsRefPtr<nsNPAPIPlugin> mPlugin;
   bool          mIsJavaPlugin;
   bool          mIsFlashPlugin;
+  bool          mIsSPSEPlugin;
   nsCString     mFileName; // UTF-8
   nsCString     mFullPath; // UTF-8
   nsCString     mVersion;  // UTF-8

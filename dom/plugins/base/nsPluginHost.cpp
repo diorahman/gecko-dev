@@ -1692,6 +1692,11 @@ nsPluginHost::GetSpecialType(const nsACString & aMIMEType)
     return eSpecialType_Unity;
   }
 
+  if (aMIMEType.LowerCaseEqualsASCII("application/x-spseplugin") ||
+      aMIMEType.LowerCaseEqualsASCII("application/x-spse")) {
+    return eSpecialType_SPSE;
+  }
+
   // Java registers variants of its MIME with parameters, e.g.
   // application/x-java-vm;version=1.3
   const nsACString &noParam = Substring(aMIMEType, 0, aMIMEType.FindChar(';'));
@@ -2035,7 +2040,7 @@ nsresult nsPluginHost::ScanPluginsDirectory(nsIFile *pluginsDir,
       *aPluginsChanged = true;
     }
 
-    // Avoid adding different versions of the same plugin if they are running 
+    // Avoid adding different versions of the same plugin if they are running
     // in-process, otherwise we risk undefined behaviour.
     if (!nsNPAPIPlugin::RunPluginOOP(pluginTag)) {
       if (HaveSamePlugin(pluginTag)) {
@@ -2225,6 +2230,7 @@ nsPluginHost::FindPluginsInContent(bool aCreatePluginList, bool* aPluginsChanged
                                                nsTArray<nsCString>(tag.extensions()),
                                                tag.isJavaPlugin(),
                                                tag.isFlashPlugin(),
+                                               tag.isSPSEPlugin(),
                                                tag.lastModifiedTime(),
                                                tag.isFromExtension());
       AddPluginTag(pluginTag);
@@ -2455,6 +2461,7 @@ nsPluginHost::FindPluginsForContent(uint32_t aPluginEpoch,
                                       tag->mExtensions,
                                       tag->mIsJavaPlugin,
                                       tag->mIsFlashPlugin,
+                                      tag->mIsSPSEPlugin,
                                       tag->mFileName,
                                       tag->mVersion,
                                       tag->mLastModifiedTime,
@@ -3097,7 +3104,7 @@ nsresult nsPluginHost::NewPluginURLStream(const nsString& aURL,
   if (aURL.Length() <= 0)
     return NS_OK;
 
-  // get the base URI for the plugin to create an absolute url 
+  // get the base URI for the plugin to create an absolute url
   // in case aURL is relative
   nsRefPtr<nsPluginInstanceOwner> owner = aInstance->GetOwner();
   if (owner) {
@@ -3363,7 +3370,7 @@ nsPluginHost::StopPluginInstance(nsNPAPIPluginInstance* aInstance)
         oldestInstance->Destroy();
         mInstances.RemoveElement(oldestInstance);
         // TODO: Remove this check once bug 752422 was investigated
-        if (pluginTag) {          
+        if (pluginTag) {
           OnPluginInstanceDestroyed(pluginTag);
         }
       }
@@ -3373,7 +3380,7 @@ nsPluginHost::StopPluginInstance(nsNPAPIPluginInstance* aInstance)
     aInstance->Destroy();
     mInstances.RemoveElement(aInstance);
     // TODO: Remove this check once bug 752422 was investigated
-    if (pluginTag) {      
+    if (pluginTag) {
       OnPluginInstanceDestroyed(pluginTag);
     }
   }
@@ -3927,7 +3934,7 @@ nsPluginHost::InstanceArray()
   return &mInstances;
 }
 
-void 
+void
 nsPluginHost::DestroyRunningInstances(nsPluginTag* aPluginTag)
 {
   for (int32_t i = mInstances.Length(); i > 0; i--) {

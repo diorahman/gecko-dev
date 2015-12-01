@@ -38,7 +38,7 @@ inline char* new_str(const char* str)
 {
   if (str == nullptr)
     return nullptr;
-  
+
   char* result = new char[strlen(str) + 1];
   if (result != nullptr)
     return strcpy(result, str);
@@ -78,6 +78,7 @@ nsPluginTag::nsPluginTag(nsPluginInfo* aPluginInfo,
     mLibrary(nullptr),
     mIsJavaPlugin(false),
     mIsFlashPlugin(false),
+    mIsSPSEPlugin(false),
     mFileName(aPluginInfo->fFileName),
     mFullPath(aPluginInfo->fFullPath),
     mVersion(aPluginInfo->fVersion),
@@ -141,6 +142,7 @@ nsPluginTag::nsPluginTag(uint32_t aId,
                          nsTArray<nsCString> aExtensions,
                          bool aIsJavaPlugin,
                          bool aIsFlashPlugin,
+                         bool aIsSPSEPlugin,
                          int64_t aLastModifiedTime,
                          bool aFromExtension)
   : mId(aId),
@@ -153,6 +155,7 @@ nsPluginTag::nsPluginTag(uint32_t aId,
     mLibrary(nullptr),
     mIsJavaPlugin(aIsJavaPlugin),
     mIsFlashPlugin(aIsFlashPlugin),
+    mIsSPSEPlugin(aIsSPSEPlugin),
     mFileName(aFileName),
     mVersion(aVersion),
     mLastModifiedTime(aLastModifiedTime),
@@ -201,6 +204,9 @@ void nsPluginTag::InitMime(const char* const* aMimeTypes,
         break;
       case nsPluginHost::eSpecialType_Flash:
         mIsFlashPlugin = true;
+        break;
+      case nsPluginHost::eSpecialType_SPSE:
+        mIsSPSEPlugin = true;
         break;
       case nsPluginHost::eSpecialType_None:
       default:
@@ -266,7 +272,7 @@ static nsresult ConvertToUTF8(nsIUnicodeDecoder *aUnicodeDecoder,
   NS_ENSURE_SUCCESS(rv, rv);
   buffer.SetLength(outUnicodeLen);
   CopyUTF16toUTF8(buffer, aString);
-  
+
   return NS_OK;
 }
 #endif
@@ -277,7 +283,7 @@ nsresult nsPluginTag::EnsureMembersAreUTF8()
   return NS_OK;
 #else
   nsresult rv;
-  
+
   nsCOMPtr<nsIPlatformCharset> pcs =
   do_GetService(NS_PLATFORMCHARSET_CONTRACTID, &rv);
   NS_ENSURE_SUCCESS(rv, rv);
@@ -291,7 +297,7 @@ nsresult nsPluginTag::EnsureMembersAreUTF8()
     ConvertToUTF8(decoder, mFileName);
     ConvertToUTF8(decoder, mFullPath);
   }
-  
+
   // The description of the plug-in and the various MIME type descriptions
   // should be encoded in the standard plain text file encoding for this system.
   // XXX should we add kPlatformCharsetSel_PluginResource?
@@ -568,6 +574,11 @@ nsCString nsPluginTag::GetNiceFileName() {
 
   if (mIsJavaPlugin) {
     mNiceFileName.AssignLiteral("java");
+    return mNiceFileName;
+  }
+
+  if (mIsSPSEPlugin) {
+    mNiceFileName.AssignLiteral("spse");
     return mNiceFileName;
   }
 

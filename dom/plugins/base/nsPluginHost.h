@@ -139,22 +139,22 @@ public:
   nsresult GetPluginTagForInstance(nsNPAPIPluginInstance *aPluginInstance, nsIPluginTag **aPluginTag);
 
   nsresult
-  NewPluginURLStream(const nsString& aURL, 
-                     nsNPAPIPluginInstance *aInstance, 
+  NewPluginURLStream(const nsString& aURL,
+                     nsNPAPIPluginInstance *aInstance,
                      nsNPAPIPluginStreamListener *aListener,
                      nsIInputStream *aPostStream = nullptr,
-                     const char *aHeadersData = nullptr, 
+                     const char *aHeadersData = nullptr,
                      uint32_t aHeadersDataLen = 0);
 
   nsresult
-  GetURLWithHeaders(nsNPAPIPluginInstance *pluginInst, 
-                    const char* url, 
+  GetURLWithHeaders(nsNPAPIPluginInstance *pluginInst,
+                    const char* url,
                     const char* target = nullptr,
                     nsNPAPIPluginStreamListener* streamListener = nullptr,
                     const char* altHost = nullptr,
                     const char* referrer = nullptr,
                     bool forceJSEnabled = false,
-                    uint32_t getHeadersLength = 0, 
+                    uint32_t getHeadersLength = 0,
                     const char* getHeaders = nullptr);
 
   nsresult
@@ -162,7 +162,7 @@ public:
                          const char* aURL);
 
   nsresult
-  AddHeadersToChannel(const char *aHeadersData, uint32_t aHeadersDataLen, 
+  AddHeadersToChannel(const char *aHeadersData, uint32_t aHeadersDataLen,
                       nsIChannel *aGenericChannel);
 
   static nsresult GetPluginTempDir(nsIFile **aDir);
@@ -189,7 +189,9 @@ public:
                      // Native widget quirks
                      eSpecialType_RealPlayer,
                      // Native widget quirks
-                     eSpecialType_Unity };
+                     eSpecialType_Unity,
+                     // Custom native process
+                     eSpecialType_SPSE };
   static SpecialType GetSpecialType(const nsACString & aMIMEType);
 
   static nsresult PostPluginUnloadEvent(PRLibrary* aLibrary);
@@ -289,10 +291,10 @@ private:
 
   // Checks to see if a tag object is in our list of live tags.
   bool IsLiveTag(nsIPluginTag* tag);
-  
+
   // Checks our list of live tags for an equivalent tag.
   nsPluginTag* HaveSamePlugin(const nsPluginTag * aPluginTag);
-    
+
   // Returns the first plugin at |path|
   nsPluginTag* FirstPluginWithPath(const nsCString& path);
 
