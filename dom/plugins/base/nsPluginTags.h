@@ -128,6 +128,7 @@ public:
               nsTArray<nsCString> aExtensions,
               bool aIsJavaPlugin,
               bool aIsFlashPlugin,
+              bool aIsSPSEPlugin,
               bool aSupportsAsyncInit,
               int64_t aLastModifiedTime,
               bool aFromExtension);
@@ -166,6 +167,7 @@ public:
   RefPtr<nsNPAPIPlugin> mPlugin;
   bool          mIsJavaPlugin;
   bool          mIsFlashPlugin;
+  bool          mIsSPSEPlugin;
   bool          mSupportsAsyncInit;
   nsCString     mFullPath; // UTF-8
   int64_t       mLastModifiedTime;

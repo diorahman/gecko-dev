@@ -235,6 +235,7 @@ nsPluginTag::nsPluginTag(nsPluginInfo* aPluginInfo,
     mLibrary(nullptr),
     mIsJavaPlugin(false),
     mIsFlashPlugin(false),
+    mIsSPSEPlugin(false),
     mSupportsAsyncInit(false),
     mFullPath(aPluginInfo->fFullPath),
     mLastModifiedTime(aLastModifiedTime),
@@ -293,6 +294,7 @@ nsPluginTag::nsPluginTag(uint32_t aId,
                          nsTArray<nsCString> aExtensions,
                          bool aIsJavaPlugin,
                          bool aIsFlashPlugin,
+                         bool aIsSPSEPlugin,
                          bool aSupportsAsyncInit,
                          int64_t aLastModifiedTime,
                          bool aFromExtension)
@@ -303,6 +305,7 @@ nsPluginTag::nsPluginTag(uint32_t aId,
     mLibrary(nullptr),
     mIsJavaPlugin(aIsJavaPlugin),
     mIsFlashPlugin(aIsFlashPlugin),
+    mIsSPSEPlugin(aIsSPSEPlugin),
     mSupportsAsyncInit(aSupportsAsyncInit),
     mLastModifiedTime(aLastModifiedTime),
     mNiceFileName(),
@@ -351,6 +354,10 @@ void nsPluginTag::InitMime(const char* const* aMimeTypes,
         break;
       case nsPluginHost::eSpecialType_Flash:
         mIsFlashPlugin = true;
+        mSupportsAsyncInit = true;
+        break;
+      case nsPluginHost::eSpecialType_SPSEPlugin:
+        mIsSPSEPlugin = true;
         mSupportsAsyncInit = true;
         break;
       case nsPluginHost::eSpecialType_Silverlight:
@@ -451,7 +458,7 @@ nsresult nsPluginTag::EnsureMembersAreUTF8()
     ConvertToUTF8(decoder, mFileName);
     ConvertToUTF8(decoder, mFullPath);
   }
-  
+
   // The description of the plug-in and the various MIME type descriptions
   // should be encoded in the standard plain text file encoding for this system.
   // XXX should we add kPlatformCharsetSel_PluginResource?
@@ -691,6 +698,11 @@ nsPluginTag::GetNiceFileName()
 
   if (mIsFlashPlugin) {
     mNiceFileName.AssignLiteral("flash");
+    return mNiceFileName;
+  }
+
+  if (mIsSPSEPlugin) {
+    mNiceFileName.AssignLiteral("spse");
     return mNiceFileName;
   }
 

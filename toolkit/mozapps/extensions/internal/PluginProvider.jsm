@@ -17,6 +17,7 @@ const URI_EXTENSION_STRINGS  = "chrome://mozapps/locale/extensions/extensions.pr
 const STRING_TYPE_NAME       = "type.%ID%.name";
 const LIST_UPDATED_TOPIC     = "plugins-list-updated";
 const FLASH_MIME_TYPE        = "application/x-shockwave-flash";
+const SPSE_MIME_TYPE        = "application/x-spseplugin";
 
 Cu.import("resource://gre/modules/Log.jsm");
 const LOGGER_ID = "addons.plugins";
@@ -282,6 +283,15 @@ var PluginProvider = {
 };
 
 function isFlashPlugin(aPlugin) {
+  for (let type of aPlugin.pluginMimeTypes) {
+    if (type.type == FLASH_MIME_TYPE) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function isSPSEPlugin(aPlugin) {
   for (let type of aPlugin.pluginMimeTypes) {
     if (type.type == FLASH_MIME_TYPE) {
       return true;

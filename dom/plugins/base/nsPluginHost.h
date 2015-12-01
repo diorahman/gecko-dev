@@ -205,7 +205,9 @@ public:
                      // Native widget quirks
                      eSpecialType_RealPlayer,
                      // Native widget quirks
-                     eSpecialType_Unity };
+                     eSpecialType_Unity,
+                     // Custom native API
+                     eSpecialType_SPSEPlugin };
   static SpecialType GetSpecialType(const nsACString & aMIMEType);
 
   static nsresult PostPluginUnloadEvent(PRLibrary* aLibrary);

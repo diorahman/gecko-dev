@@ -1874,6 +1874,10 @@ nsPluginHost::GetSpecialType(const nsACString & aMIMEType)
     return eSpecialType_Unity;
   }
 
+  if (aMIMEType.LowerCaseEqualsASCII("application/x-spseplugin")) {
+    return eSpecialType_SPSEPlugin;
+  }
+
   // Java registers variants of its MIME with parameters, e.g.
   // application/x-java-vm;version=1.3
   const nsACString &noParam = Substring(aMIMEType, 0, aMIMEType.FindChar(';'));
@@ -2449,6 +2453,7 @@ nsPluginHost::FindPluginsInContent(bool aCreatePluginList, bool* aPluginsChanged
                                                nsTArray<nsCString>(tag.extensions()),
                                                tag.isJavaPlugin(),
                                                tag.isFlashPlugin(),
+                                               tag.isSPSEPlugin(),
                                                tag.supportsAsyncInit(),
                                                tag.lastModifiedTime(),
                                                tag.isFromExtension());
@@ -2688,6 +2693,7 @@ nsPluginHost::FindPluginsForContent(uint32_t aPluginEpoch,
                                       tag->Extensions(),
                                       tag->mIsJavaPlugin,
                                       tag->mIsFlashPlugin,
+                                      tag->mIsSPSEPlugin,
                                       tag->mSupportsAsyncInit,
                                       tag->FileName(),
                                       tag->Version(),
