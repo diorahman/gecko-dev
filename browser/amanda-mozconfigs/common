@@ -1,0 +1,37 @@
+ac_add_options --enable-application=browser
+
+# optimize!
+ac_add_options --enable-optimize
+
+# mar windows only
+# ac_add_options --enable-signmar
+# ac_add_options --enable-verify-mar
+
+# branding
+ac_add_options --with-branding=browser/branding/amanda
+
+# strip
+ac_add_options --enable-strip
+ac_add_options --enable-install-strip
+
+# remove not required
+ac_add_options --disable-debug
+ac_add_options --disable-tests
+ac_add_options --disable-ipdl-tests
+ac_add_options --disable-mochitest
+ac_add_options --disable-mochitests
+ac_add_options --disable-parental-controls
+ac_add_options --disable-windows-mobile-components
+ac_add_options --disable-maintenance-service
+
+# disable updater
+ac_add_options --disable-updater
+ac_add_options --disable-update-channel
+ac_add_options --disable-update-packaging
+
+# make it fast
+mk_add_options MOZ_MAKE_FLAGS=-j8
+
+# result dir
+mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-amanda
+
