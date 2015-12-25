@@ -3,8 +3,9 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 MOZ_APP_DISPLAYNAME=Amanda
-MOZ_APP_BASENAME=Amanda                                                         
-MOZ_APP_PROFILE=amanda                                               
+MOZ_APP_BASENAME=Amanda
+MOZ_APP_VENDOR=LKPP
+MOZ_APP_PROFILE=lkpp/amanda
 MOZ_APP_NAME=amanda
 
 MOZ_APP_UA_NAME=Amanda
