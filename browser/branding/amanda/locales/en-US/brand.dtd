@@ -3,7 +3,7 @@
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 
 <!ENTITY  brandShorterName      "Amanda">
-<!ENTITY  brandShortName        "LKPP Amanda">
+<!ENTITY  brandShortName        "Amanda">
 <!ENTITY  brandFullName         "LKPP Amanda">
 <!ENTITY  vendorShortName       "LKPP">
-<!ENTITY  trademarkInfo.part1   "Amanda is built on top of Mozilla Firefox. Firefox and the Firefox logos are trademarks of the Mozilla Foundation.">
+<!ENTITY  trademarkInfo.part1   "Amanda is build on top of Firefox. Firefox and the Firefox logos are trademarks of the Mozilla Foundation.">

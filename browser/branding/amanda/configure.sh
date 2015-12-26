@@ -10,3 +10,5 @@ MOZ_APP_NAME=amanda
 
 MOZ_APP_UA_NAME=Amanda
 MOZ_APP_UA_VERSION=1.0
+
+

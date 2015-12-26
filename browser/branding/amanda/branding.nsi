@@ -2,21 +2,25 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# NSIS branding defines for Aurora builds.
-# The official release build branding.nsi is located in other-license/branding/firefox/
+# NSIS branding defines for official release builds.
+# The nightly build branding.nsi is located in browser/installer/windows/nsis/
 # The unofficial build branding.nsi is located in browser/branding/unofficial/
 
 # BrandFullNameInternal is used for some registry and file system values
 # instead of BrandFullName and typically should not be modified.
 !define BrandFullNameInternal "LKPP Amanda"
-!define BrandShortName        "Amanda"
-!define CompanyName           "LKPP"
+!define CompanyName           "Lembaga Kebijakan Pengadaan Barang dan Jasa Pemerintah Republik Indonesia"
 !define URLInfoAbout          "http://lkpp.go.id"
-!define HelpLink              "http://lkpp.go.id"
+!define URLUpdateInfo         "http://amanda.lkpp.go.id/${AppVersion}/releasenotes"
+!define HelpLink              "http://amanda.lkpp.go.id/support"
 
-!define URLStubDownload "http://amanda.lkpp.org/?os=win&lang=${AB_CD}&product=amanda-latest"
-!define URLManualDownload "http://lkpp.go.id/${AB_CD}/amanda/installer-help/?channel=amanda&installer_lang=${AB_CD}"
-!define Channel "aurora"
+; The OFFICIAL define is a workaround to support different urls for Release and
+; Beta since they share the same branding when building with other branches that
+; set the update channel to beta.
+!define OFFICIAL
+!define URLStubDownload "http://amanda.lkpp.go.id/downloads/?os=win&lang=${AB_CD}&product=latest"
+!define URLManualDownload "http://amanda.lkpp.go.id/${AB_CD}/installer-help/?channel=release&installer_lang=${AB_CD}"
+!define Channel "release"
 
 # The installer's certificate name and issuer expected by the stub installer
 !define CertNameDownload   "Mozilla Corporation"
@@ -26,23 +30,20 @@
 # settings.
 # The dialog units for the bitmap's dimensions should match exactly with the
 # bitmap's width and height in pixels.
-!define APPNAME_BMP_WIDTH_DU 93u
-!define APPNAME_BMP_HEIGHT_DU 44u
-!define INTRO_BLURB_WIDTH_DU "232u"
-!define INTRO_BLURB_EDGE_DU "196u"
-!define INTRO_BLURB_LTR_TOP_DU "16u"
-!define INTRO_BLURB_RTL_TOP_DU "11u"
+!define APPNAME_BMP_WIDTH_DU "134u"
+!define APPNAME_BMP_HEIGHT_DU "36u"
+!define INTRO_BLURB_WIDTH_DU "258u"
+!define INTRO_BLURB_EDGE_DU "170u"
+!define INTRO_BLURB_LTR_TOP_DU "20u"
+!define INTRO_BLURB_RTL_TOP_DU "12u"
 
 # UI Colors that can be customized for each channel
 !define FOOTER_CONTROL_TEXT_COLOR_NORMAL 0x000000
-!define FOOTER_CONTROL_TEXT_COLOR_FADED 0x999999
+!define FOOTER_CONTROL_TEXT_COLOR_FADED 0x666666
 !define FOOTER_BKGRD_COLOR 0xFFFFFF
-!define INTRO_BLURB_TEXT_COLOR 0xFFFFFF
-!define INSTALL_BLURB_TEXT_COLOR 0xFFFFFF
-!define INSTALL_PROGRESS_TEXT_COLOR_NORMAL 0xFFFFFF
-!define COMMON_TEXT_COLOR_NORMAL 0xFFFFFF
-!define COMMON_TEXT_COLOR_FADED 0xA1AAB3
-!define COMMON_BKGRD_COLOR 0x0F1B26
-
-# Enable DeveloperEdition-specific behavior
-!define DEV_EDITION
+!define INTRO_BLURB_TEXT_COLOR 0x666666
+!define INSTALL_BLURB_TEXT_COLOR 0x666666
+!define INSTALL_PROGRESS_TEXT_COLOR_NORMAL 0x666666
+!define COMMON_TEXT_COLOR_NORMAL 0x000000
+!define COMMON_TEXT_COLOR_FADED 0x666666
+!define COMMON_BKGRD_COLOR 0xF0F0F0
